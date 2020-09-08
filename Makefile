@@ -14,4 +14,7 @@ $(TARGET): util.o ffcache.o main.o
 	g++ -static $(CCOPT) $^ -lstdc++fs -o $@
 
 clean:
-	rm -f *.o $(TARGET) $(PYTARGET)
+	rm -f *.o $(TARGET) *.so
+
+test:
+	python3 -c 'import ffcache'
