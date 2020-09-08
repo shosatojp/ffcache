@@ -27,6 +27,7 @@ jobs:
           *.so
   test:
     runs-on: ubuntu-18.04
+    needs: build
 
     steps:
     - uses: actions/checkout@v2
