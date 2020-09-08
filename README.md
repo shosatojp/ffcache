@@ -4,6 +4,10 @@
 
 Firefox cache extractor.
 
+## install
+
+download artifacts from [here](https://github.com/shosatojp/ffcache/actions) or manually build.
+
 ## build
 
 ### build on host
@@ -17,5 +21,7 @@ make
 ### build with docker
 
 ```sh
-sudo docker-compose up --build --build-arg PYTHON=python3.8
+sudo docker-compose up --build
 ```
+
+* specify python version in `docker-compose.yml` (default python3.8)
