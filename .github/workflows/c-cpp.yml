@@ -9,12 +9,13 @@ on:
 jobs:
   build:
 
-    runs-on: alpine:edge
+    runs-on: ubuntu-18.04
 
     steps:
     - uses: actions/checkout@v2
     - name: install dependencies
-      run: apk add g++ python3-dev py3-pip make
+      run: apt-get update && \
+           apt-get install -y g++ python3.8-dev make python3-pip
     - name: install pybind11
       run: pip3 install pybind11
     - name: make
