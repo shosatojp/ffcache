@@ -4,6 +4,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - PYTHON=python3.8
     volumes:
       - ./:/home/
       - /etc/passwd:/etc/passwd:ro

@@ -1,6 +1,9 @@
-PYTARGET:=ffcache$(shell python3-config --extension-suffix)
+SHELL=/bin/bash
+
+PYTHON:=python3.8
+PYTARGET:=ffcache$(shell ${PYTHON}-config --extension-suffix)
 TARGET:=ffcache-linux-x86_64
-CCOPT:=-std=c++11 -W -Wall $(shell python3 -m pybind11 --includes)
+CCOPT:=-std=c++11 -W -Wall $(shell ${PYTHON} -m pybind11 --includes)
 
 all: $(TARGET) $(PYTARGET)
 
@@ -17,4 +20,4 @@ clean:
 	rm -f *.o $(TARGET) *.so
 
 test:
-	python3 -c 'import ffcache'
+	$(PYTHON) -c 'import ffcache'

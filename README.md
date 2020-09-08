@@ -15,5 +15,5 @@ make
 ### build with docker
 
 ```sh
-sudo docker-compose up --build
+sudo docker-compose up --build --build-arg PYTHON=python3.8
 ```
