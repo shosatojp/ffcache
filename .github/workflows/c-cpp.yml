@@ -16,7 +16,7 @@ jobs:
       run: sudo apt-get update &&
            sudo apt-get install -y g++ python3.8-dev make python3-pip
     - name: install pybind11
-      run: pip3 install pybind11
+      run: python3.8 -m pip install pybind11
     - name: make
       run: make
     - uses: actions/upload-artifact@v2
