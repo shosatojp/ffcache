@@ -1,0 +1,11 @@
+version: '3.1'
+services:
+  ffcache:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/home/
+      - /etc/passwd:/etc/passwd:ro
+      - /etc/group:/etc/group:ro
+    user: "${SUDO_UID}:${SUDO_GID}"

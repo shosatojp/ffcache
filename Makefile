@@ -1,6 +1,6 @@
 PYTARGET:=ffcache$(shell python3-config --extension-suffix)
 TARGET:=ffcache-linux-x86_64
-CCOPT:=-std=c++11 -W -Wall
+CCOPT:=-std=c++11 -W -Wall $(shell python3 -m pybind11 --includes)
 
 all: $(TARGET) $(PYTARGET)
 
@@ -8,7 +8,7 @@ all: $(TARGET) $(PYTARGET)
 	g++ -fPIC $(CCOPT) -c -o $@ $^
 
 $(PYTARGET): util.o ffcache.o pymain.o
-	g++ $(CCOPT) -O3 -fPIC -shared `python3 -m pybind11 --includes` $^ -lstdc++fs -o $@
+	g++ $(CCOPT) -O3 -fPIC -shared $^ -lstdc++fs -o $@
 
 $(TARGET): util.o ffcache.o main.o
 	g++ -static $(CCOPT) $^ -lstdc++fs -o $@

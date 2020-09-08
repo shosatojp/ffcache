@@ -9,11 +9,13 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: alpine:edge
 
     steps:
     - uses: actions/checkout@v2
     - name: install dependencies
-      run: sudo apt-get install -y pybind11-dev libpython3.8-dev
+      run: apk add g++ python3-dev py3-pip make
+    - name: install pybind11
+      run: pip3 install pybind11
     - name: make
-      run: CPLUS_INCLUDE_PATH=/usr/include/python3.8/:$CPLUS_INCLUDE_PATH make
+      run: make
