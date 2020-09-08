@@ -34,12 +34,9 @@ jobs:
     - uses: actions/download-artifact@master
       with:
         name: my-artifact
-        path: |
-          *.so
-          ffcache-*
     - name: install dependencies
       run: sudo apt-get update &&
-           sudo apt-get install -y g++ python3.8-dev make
+           sudo apt-get install -y g++ python3.8 make
     - name: test
       run: ls && python3.8 -c 'import ffcache'
     
