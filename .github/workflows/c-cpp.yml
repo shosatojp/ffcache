@@ -37,6 +37,6 @@ jobs:
         name: ffcache
     - name: install dependencies
       run: sudo apt-get update &&
-           sudo apt-get install -y g++ python3.8 make
+           sudo apt-get install -y g++ python3.8
     - name: test
       run: python3.8 -c 'import ffcache'
