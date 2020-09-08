@@ -22,14 +22,20 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: my-artifact
-        path: 
-          - *.so
-          - ffcache-*
+        path: |
+          ffcache-*
+          *.so
   test:
     runs-on: ubuntu-18.04
 
     steps:
     - uses: actions/checkout@v2
+    - uses: actions/download-artifact@master
+      with:
+        name: my-artifact
+        path: |
+          *.so
+          ffcache-*
     - name: test
       run: make test
     
