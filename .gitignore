@@ -1,5 +1,5 @@
 /.vscode/
-ffcache
+ffcache-*
 *.so
 *.out
 *.o
