@@ -19,7 +19,12 @@ jobs:
       run: pip3 install pybind11
     - name: make
       run: make
-  
+    - uses: actions/upload-artifact@v2
+      with:
+        name: my-artifact
+        path: 
+          - *.so
+          - ffcache-*
   test:
     runs-on: ubuntu-18.04
 
