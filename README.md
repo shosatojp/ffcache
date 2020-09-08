@@ -5,6 +5,7 @@ Firefox cache extractor.
 ## build
 
 ```sh
-sudo apt install libpython3.8-dev pybind11-dev
+sudo apt-get install -y g++ python3.8-dev make python3-pip
+pip3 install pybind11
 make
 ```
