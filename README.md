@@ -1,5 +1,7 @@
 # ffcache
 
+![C/C++ CI](https://github.com/shosatojp/ffcache/workflows/C/C++%20CI/badge.svg)
+
 Firefox cache extractor.
 
 ## build
