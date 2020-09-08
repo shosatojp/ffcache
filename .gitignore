@@ -2,3 +2,4 @@
 ffcache
 *.so
 *.out
+*.o
