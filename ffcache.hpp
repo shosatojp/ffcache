@@ -14,7 +14,6 @@
 using namespace std;
 
 #include <experimental/filesystem>
-// #include <filesystem>
 namespace fs = std::experimental::filesystem;
 
 static const int CHUNK_SIZE = 256 * 1024;
@@ -27,9 +26,9 @@ void endswap(T* objp) {
     unsigned char* memp = reinterpret_cast<unsigned char*>(objp);
     std::reverse(memp, memp + sizeof(T));
 }
+
 class HttpHeader {
    public:
-    HttpHeader() {}
     HttpHeader(std::string src);
     int status_code;
     std::string status_source;
@@ -37,12 +36,14 @@ class HttpHeader {
     std::string protocol;
     std::map<std::string, std::string> headers;
 };
+
 struct CacheIndexHeader {
     uint32_t mVersion;
     uint32_t mTimeStamp;
     uint32_t mIsDirty;
     static void read(std::ifstream* ifs, CacheIndexHeader* header);
 };
+
 #pragma pack(push, 4)
 struct CacheIndexRecord {
     Hash mHash;
@@ -55,6 +56,7 @@ struct CacheIndexRecord {
     std::string hash_tostring();
     static void read(std::ifstream* ifs, CacheIndexRecord* record);
 };
+
 #pragma pack(pop)
 struct FirefoxMetaData {
     uint32_t mVersion;
@@ -67,6 +69,7 @@ struct FirefoxMetaData {
     uint32_t mFlags;
     static void read(std::ifstream* ifs, FirefoxMetaData* fmd);
 };
+
 class FirefoxCacheEntry {
    public:
     FirefoxCacheEntry(std::string path);
@@ -74,7 +77,7 @@ class FirefoxCacheEntry {
     void get_data(char** data, int* size);
     void save(std::string path);
     HttpHeader get_header();
-    //private:
+
     std::string file_path;
     int meta_start;
     int meta_end;
@@ -82,6 +85,7 @@ class FirefoxCacheEntry {
     FirefoxMetaData metadata;
     std::string key;
 };
+
 class FirefoxCacheIndex {
    public:
     FirefoxCacheIndex(){};
@@ -89,6 +93,7 @@ class FirefoxCacheIndex {
     CacheIndexHeader header;
     std::vector<CacheIndexRecord> records;
 };
+
 class FirefoxCache {
    public:
     FirefoxCache(std::string cache2_dir, bool use_index = false)

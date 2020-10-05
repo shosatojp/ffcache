@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+namespace util {
 void strip(std::vector<std::string>& v, const std::string& str, char sep) {
     size_t start = 0;
     size_t str_len = str.size();
@@ -25,3 +26,4 @@ std::string trim_copy(const std::string& str, const std::string& white_space) {
         return str.substr(start, end - 1);
     }
 }
+}  // namespace util
