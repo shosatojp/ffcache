@@ -23,6 +23,7 @@ HttpHeader::HttpHeader(std::string src) {
         std::vector<std::string> header;
         util::strip(header, s, ':');
         if (header.size() == 2) {
+            std::cout << header[0] << header[1] << std::endl;
             headers[util::trim_copy(header[0])] = util::trim_copy(header[1]);
         }
     }

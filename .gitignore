@@ -3,3 +3,4 @@ ffcache-*
 *.so
 *.out
 *.o
+*.py

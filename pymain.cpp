@@ -8,6 +8,7 @@ PYBIND11_MODULE(ffcache, m) {
 	py::class_<FirefoxCache>(m, "FirefoxCache")
 		.def(py::init<string,  bool>(), py::arg("cache2_dir"), py::arg("use_index") = false)
 		.def("keys", &FirefoxCache::keys)
+		.def_readonly("records", &FirefoxCache::records)
 		.def("find_save", &FirefoxCache::find_save, py::arg("key"), py::arg("path"))
 		.def("find", &FirefoxCache::find, py::arg("key"));
 
