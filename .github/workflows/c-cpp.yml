@@ -16,7 +16,7 @@ jobs:
       run: sudo apt-get update &&
            sudo apt-get install -y g++ python3.8-dev make python3-pip git &&
            git clone https://github.com/mapbox/gzip-hpp.git &&
-           cp -r gzip-hpp/include/gzip /usr/include
+           sudo cp -r gzip-hpp/include/gzip /usr/include
     - name: install pybind11
       run: python3.8 -m pip install pybind11
     - name: make
