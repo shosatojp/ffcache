@@ -7,11 +7,11 @@
 //HttpHeader
 HttpHeader::HttpHeader(std::string src) {
     std::vector<std::string> result;
-    util::strip(result, src, '\n');
+    util::split(result, src, '\n');
     //status
     status_source = util::trim_copy(result.front());
     std::vector<std::string> status_temp;
-    util::strip(status_temp, status_source, ' ');
+    util::split(status_temp, status_source, ' ');
     if (status_temp.size() == 3) {
         this->protocol = status_temp[0];
         this->status_code = stoi(status_temp[1]);
@@ -21,10 +21,9 @@ HttpHeader::HttpHeader(std::string src) {
     //headers
     for (std::string s : result) {
         std::vector<std::string> header;
-        util::strip(header, s, ':');
+        util::split(header, s, ':');
         if (header.size() == 2) {
-            std::cout << header[0] << header[1] << std::endl;
-            headers[util::trim_copy(header[0])] = util::trim_copy(header[1]);
+            headers[util::trim_copy(header[0], " \r\n")] = util::trim_copy(header[1], " \r\n");
         }
     }
 }

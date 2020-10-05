@@ -5,12 +5,12 @@
 #include <vector>
 
 namespace util {
-void strip(std::vector<std::string>& v, const std::string& str, char sep) {
+void split(std::vector<std::string>& v, const std::string& str, char sep) {
     size_t start = 0;
     size_t str_len = str.size();
     for (size_t i = 0; i < str_len; i++) {
         if (str[i] == sep) {
-            v.push_back(str.substr(start, i));
+            v.push_back(str.substr(start, i - start + 1));
             start = i + 1;
         }
     }
@@ -23,7 +23,7 @@ std::string trim_copy(const std::string& str, const std::string& white_space) {
     } else {
         size_t start = str.find_first_not_of(white_space);
         size_t end = str.find_last_not_of(white_space);
-        return str.substr(start, end - 1);
+        return str.substr(start, end - start + 1);
     }
 }
 }  // namespace util

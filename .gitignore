@@ -4,3 +4,4 @@ ffcache-*
 *.out
 *.o
 *.py
+/cache/
