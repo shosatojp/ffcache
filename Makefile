@@ -11,10 +11,10 @@ all: $(TARGET) $(PYTARGET)
 	g++ -fPIC $(CCOPT) -c -o $@ $^
 
 $(PYTARGET): util.o structs.o ffcacheentry.o ffcacheindex.o httpheader.o ffcache.o pymain.o
-	g++ $(CCOPT) -O3 -fPIC -shared $^ -lstdc++fs -o $@
+	g++ $(CCOPT) -O3 -fPIC -shared $^ -lstdc++fs -lz -o $@
 
 $(TARGET): util.o structs.o ffcacheentry.o ffcacheindex.o httpheader.o ffcache.o main.o
-	g++ -static $(CCOPT) $^ -lstdc++fs -o $@
+	g++ -static $(CCOPT) $^ -lstdc++fs -lz -o $@
 
 clean:
 	rm -f *.o $(TARGET) *.so

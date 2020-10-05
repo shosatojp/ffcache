@@ -23,7 +23,15 @@ HttpHeader::HttpHeader(std::string src) {
         std::vector<std::string> header;
         util::split(header, s, ':');
         if (header.size() == 2) {
-            headers[util::trim_copy(header[0], " \r\n")] = util::trim_copy(header[1], " \r\n");
+            std::string&& key = util::trim_copy(header[0], " \r\n");
+            std::transform(key.begin(), key.end(), key.begin(), [](char c) {
+                return std::tolower(c);
+            });
+            headers[key] = util::trim_copy(header[1], " \r\n");
         }
     }
+}
+
+bool HttpHeader::is_gzipped() {
+    return headers.count("content-encoding") != 0 && headers["content-encoding"] == "gzip";
 }

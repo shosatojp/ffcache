@@ -10,11 +10,11 @@ void split(std::vector<std::string>& v, const std::string& str, char sep) {
     size_t str_len = str.size();
     for (size_t i = 0; i < str_len; i++) {
         if (str[i] == sep) {
-            v.push_back(str.substr(start, i - start + 1));
+            v.push_back(str.substr(start, i - start));
             start = i + 1;
         }
     }
-    v.push_back(str.substr(start, str_len - 1));
+    v.push_back(str.substr(start, str_len - start));
 }
 
 std::string trim_copy(const std::string& str, const std::string& white_space) {

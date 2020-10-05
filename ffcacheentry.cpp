@@ -1,6 +1,6 @@
 
 #include <cmath>
-
+#include <gzip/decompress.hpp>
 #include "ffcache.hpp"
 #include "util.hpp"
 
@@ -61,12 +61,17 @@ void FirefoxCacheEntry::get_data(char** data, int* size) {
     *data = data_;
 }
 
-void FirefoxCacheEntry::save(std::string path) {
+void FirefoxCacheEntry::save(std::string path, bool decompress_gzip) {
     int size;
     char* data = nullptr;
     this->get_data(&data, &size);
     ofstream ofs(path, std::ios::binary);
-    ofs.write(data, size);
+    if (this->get_header().is_gzipped()) {
+        std::cout << "gzip" << std::endl;
+        ofs << gzip::decompress(data, size);
+    } else {
+        ofs.write(data, size);
+    }
     ofs.close();
     delete[] data;
 }
