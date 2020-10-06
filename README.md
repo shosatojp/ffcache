@@ -29,6 +29,12 @@ ffcache [OPTIONS]
 --out   -o      output path
 ```
 
+### Python Binding
+
+```py
+import ffcache
+```
+
 ## install
 
 download artifacts from [here](https://github.com/shosatojp/ffcache/actions) or manually build.
