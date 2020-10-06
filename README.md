@@ -4,6 +4,31 @@
 
 Firefox cache extractor.
 
+## Usage
+
+### Get list of cache
+
+```sh
+ffcache --cache ~/.cache/mozilla/firefox/hoge.default/cache2 --list
+```
+
+### Save cached file
+
+```sh
+ffcache --cache ~/.cache/mozilla/firefox/hoge.default/cache2 --key https://example.com/image.png --out myimage.png
+```
+
+### Options
+
+```sh
+[usage]
+ffcache [OPTIONS]
+--list  -l      list all keys
+--cache -c      cache2 directory
+--key   -k      key
+--out   -o      output path
+```
+
 ## install
 
 download artifacts from [here](https://github.com/shosatojp/ffcache/actions) or manually build.
