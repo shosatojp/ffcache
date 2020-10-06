@@ -66,8 +66,7 @@ void FirefoxCacheEntry::save(std::string path, bool decompress_gzip) {
     char* data = nullptr;
     this->get_data(&data, &size);
     ofstream ofs(path, std::ios::binary);
-    if (this->get_header().is_gzipped()) {
-        std::cout << "gzip" << std::endl;
+    if (decompress_gzip && this->get_header().is_gzipped()) {
         ofs << gzip::decompress(data, size);
     } else {
         ofs.write(data, size);

@@ -1,26 +1,67 @@
+#include <cstring>
 #include <iostream>
 #include <string>
 
 #include "ffcache.hpp"
 
 int main(int argc, const char* argv[]) {
-    if (argc > 3) {
-        // argv[1] : cache dir
-        // argv[2] : key
-        // argv[3] : output path
+    std::string cache_dir;
+    std::string key;
+    std::string out_path;
+    bool list = false;
+
+    for (int i = 1; i < argc;) {
+        if (!std::strcmp(argv[i], "--help") || !std::strcmp(argv[i], "-h")) {
+            std::cout << "[usage]" << std::endl
+                      << "ffcache [OPTIONS]" << std::endl
+                      << "--list  -l      list all keys" << std::endl
+                      << "--cache -c      cache2 directory" << std::endl
+                      << "--key   -k      key" << std::endl
+                      << "--out   -o      output path" << std::endl;
+            exit(0);
+        } else if (!std::strcmp(argv[i], "--list") || !std::strcmp(argv[i], "-l")) {
+            list = true;
+            i++;
+        } else if (!std::strcmp(argv[i], "--cache") || !std::strcmp(argv[i], "-c")) {
+            cache_dir = argv[++i];
+            i++;
+        } else if (!std::strcmp(argv[i], "--key") || !std::strcmp(argv[i], "-k")) {
+            key = argv[++i];
+            i++;
+        } else if (!std::strcmp(argv[i], "--out") || !std::strcmp(argv[i], "-o")) {
+            out_path = argv[++i];
+            i++;
+        }
+    }
+
+    if (!cache_dir.size()) {
+        std::cerr << "Error: --cache required" << std::endl;
+        exit(1);
+    }
+
+    if (list) {
+        FirefoxCache index{cache_dir};
+        for (auto key : index.keys()) {
+            std::cout << key << std::endl;
+        }
+        exit(0);
+    }
+
+    if (key.size() && out_path.size()) {
+        // key-path
         try {
-            fs::path dir(argv[1]);
-            FirefoxCache index(dir);
-            FirefoxCacheEntry ff = index.find(argv[2]);
-            ff.save(argv[3]);
+            FirefoxCache index{cache_dir};
+            FirefoxCacheEntry ff = index.find(key);
+            ff.save(out_path);
             exit(0);
         } catch (...) {
             std::cout << "not found" << std::endl;
             exit(2);
         }
-    } else if (argc > 1) {
-        fs::path dir(argv[1]);
-        FirefoxCache index(dir);
+        exit(0);
+    } else {
+        // from stdin
+        FirefoxCache index{cache_dir};
 
         std::string buf;
         while (std::getline(std::cin, buf)) {
@@ -42,11 +83,6 @@ int main(int argc, const char* argv[]) {
                 std::cout << "not found" << std::endl;
             }
         }
-
-    } else {
-        std::cout << "not enough arguments" << std::endl
-                  << "[usage]" << std::endl
-                  << "ffcache <cache-dir> <url> <output-file>" << std::endl;
-        exit(1);
+        exit(0);
     }
 }
