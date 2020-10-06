@@ -21,3 +21,6 @@ clean:
 
 test:
 	$(PYTHON) -c 'import ffcache'
+
+install:
+	cp -i $(TARGET) ~/local/bin/ffcache
