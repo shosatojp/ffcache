@@ -13,8 +13,8 @@
 
 using namespace std;
 
-#include <experimental/filesystem>
-namespace fs = std::experimental::filesystem;
+#include <filesystem>
+namespace fs = std::filesystem;
 
 static const int CHUNK_SIZE = 256 * 1024;
 static const size_t kHashSize = 20;
