@@ -1,6 +1,7 @@
 
 #include <cmath>
-#include <gzip/decompress.hpp>
+#include <memory>
+
 #include "ffcache.hpp"
 #include "util.hpp"
 
@@ -52,27 +53,27 @@ std::map<std::string, std::string> FirefoxCacheEntry::load_map() {
     return result;
 }
 
-void FirefoxCacheEntry::get_data(char** data, int* size) {
+std::unique_ptr<std::vector<char>> FirefoxCacheEntry::get_data() const {
     std::ifstream ifs(this->file_path, std::ios::binary);
-    char* data_ = new char[this->meta_start];
-    ifs.read(data_, this->meta_start);
+    auto ptr = std::make_unique<std::vector<char>>(this->meta_start);
+    if (this->meta_start > 0) {
+        ifs.read(&ptr->at(0), this->meta_start);
+    }
     ifs.close();
-    *size = this->meta_start;
-    *data = data_;
+    return ptr;
 }
 
-void FirefoxCacheEntry::save(std::string path, bool decompress_gzip) {
-    int size;
-    char* data = nullptr;
-    this->get_data(&data, &size);
-    ofstream ofs(path, std::ios::binary);
-    if (decompress_gzip && this->get_header().is_gzipped()) {
-        ofs << gzip::decompress(data, size);
+bool FirefoxCacheEntry::save(std::string __path) const {
+    auto ptr = this->get_data();
+
+    if (ptr->size() > 0) {
+        std::ofstream ofs{__path, std::ios::binary};
+        ofs.write(&ptr->at(0), ptr->size());
+        ofs.close();
+        return true;
     } else {
-        ofs.write(data, size);
+        return false;
     }
-    ofs.close();
-    delete[] data;
 }
 
 HttpHeader FirefoxCacheEntry::get_header() {

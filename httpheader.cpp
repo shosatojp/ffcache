@@ -31,7 +31,3 @@ HttpHeader::HttpHeader(std::string src) {
         }
     }
 }
-
-bool HttpHeader::is_gzipped() {
-    return headers.count("content-encoding") != 0 && headers["content-encoding"] == "gzip";
-}

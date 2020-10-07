@@ -35,7 +35,6 @@ class HttpHeader {
     std::string status_message;
     std::string protocol;
     std::map<std::string, std::string> headers;
-    bool is_gzipped();
 };
 
 struct CacheIndexHeader {
@@ -75,8 +74,8 @@ class FirefoxCacheEntry {
    public:
     FirefoxCacheEntry(std::string path);
     std::map<std::string, std::string> load_map();
-    void get_data(char** data, int* size);
-    void save(std::string path, bool decompress_gzip = true);
+    std::unique_ptr<std::vector<char>> get_data() const;
+    bool save(std::string __path) const;
     HttpHeader get_header();
 
     std::string file_path;
