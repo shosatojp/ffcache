@@ -8,6 +8,8 @@ CCOPT:=-std=c++2a -march=$(ARCH) -O2 -g -W -Wall $(shell ${PYTHON} -m pybind11 -
 CXX:=g++
 
 all: $(TARGET) $(PYTARGET)
+py: $(PYTARGET)
+cli: $(TARGET)
 
 %.o: %.cpp
 	$(CXX) -fPIC $(CCOPT) -c -o $@ $^
