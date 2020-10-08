@@ -1,3 +1,3 @@
 rm -rf dist/
 python3 setup.py sdist
-twine upload dist/*
+pip3 install $(find dist -type f)
