@@ -14,11 +14,11 @@ cli: $(TARGET)
 	$(CXX) -fPIC $(CCOPT) -c -o $@ $^
 
 $(PYTARGET): util.o structs.o ffcacheentry.o ffcacheindex.o httpheader.o ffcache.o pymain.o
-	$(CXX) $(CCOPT) -fPIC -shared $^ -o $@
+	$(CXX) $(CCOPT) -fPIC -shared $^ -lstdc++fs -o $@
 
 $(TARGET): util.o structs.o ffcacheentry.o ffcacheindex.o httpheader.o ffcache.o main.o
 	mkdir -p bin
-	$(CXX) $(CCOPT) $^ -o bin/$@
+	$(CXX) $(CCOPT) $^ -lstdc++fs -o bin/$@
 
 clean:
 	rm -rfv *.o bin *.so
