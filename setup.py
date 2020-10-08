@@ -10,7 +10,7 @@ import shutil
 
 class my_ext(build_ext):
     def build_extension(self, _):
-        subprocess.run(['make', 'py', f'-j{os.cpu_count()}'])
+        subprocess.run(['make', 'py', f'-j{os.cpu_count()}']).check_returncode()
         bins = glob.glob('*.so')
         for bin in bins:
             outpath = os.path.join(self.build_lib, bin)
