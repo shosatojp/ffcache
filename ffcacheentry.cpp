@@ -55,7 +55,7 @@ std::map<std::string, std::string> FirefoxCacheEntry::load_map() {
 
 std::unique_ptr<std::vector<char>> FirefoxCacheEntry::get_data() const {
     std::ifstream ifs(this->file_path, std::ios::binary);
-    auto ptr = std::make_unique<std::vector<char>>(this->meta_start);
+    auto ptr = std::unique_ptr<std::vector<char>>(new std::vector<char>(this->meta_start));
     if (this->meta_start > 0) {
         ifs.read(&ptr->at(0), this->meta_start);
     }

@@ -6,11 +6,16 @@ from setuptools.command.build_ext import build_ext
 from setuptools.extension import Extension
 import os
 import shutil
+import sys
 
 
 class my_ext(build_ext):
     def build_extension(self, _):
-        subprocess.run(['make', 'py', f'-j{os.cpu_count()}'])
+        subprocess.run([
+            'make', 'py',
+            f'-j{os.cpu_count()}',
+            f'PYTHON={sys.executable}'
+        ]).check_returncode()
         bins = glob.glob('*.so')
         for bin in bins:
             outpath = os.path.join(self.build_lib, bin)
@@ -22,7 +27,7 @@ with open('README.md', 'rt', encoding='utf-8') as fh:
 
 setup(
     name='ffcache',
-    version='0.0.12',
+    version='0.0.13',
     author='shosatojp',
     author_email='me@shosato.jp',
     description='Firefox cache extractor',
