@@ -46,7 +46,7 @@ setup(
         'build_ext': my_ext,
     },
     ext_modules=[
-        # for c++ extension (arg `_ffcache` is arbitrary, set `sourcedir` to include all files in this directory)
-        Extension('_ffcache', [], sourcedir=os.path.abspath('.')),
+        # for c++ extension (arg `_ffcache` is arbitrary)
+        Extension('_ffcache', glob.glob('*.cpp') + glob.glob('*.hpp') + ['Makefile']),
     ]
 )
