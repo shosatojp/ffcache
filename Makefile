@@ -21,7 +21,7 @@ $(TARGET): util.o structs.o ffcacheentry.o ffcacheindex.o httpheader.o ffcache.o
 	$(CXX) -static $(CCOPT) $^ -o bin/$@
 
 clean:
-	rm -f *.o $(TARGET) *.so
+	rm -rfv *.o bin *.so
 
 test:
 	$(PYTHON) -c 'import ffcache'
