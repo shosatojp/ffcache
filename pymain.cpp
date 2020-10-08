@@ -5,7 +5,7 @@
 
 namespace py = pybind11;
 
-PYBIND11_MODULE(ffcache, m) {
+PYBIND11_MODULE(_ffcache, m) {
     py::class_<FirefoxCache>(m, "FirefoxCache")
         .def(py::init<string>(), py::arg("cache2_dir"))
         .def("keys", &FirefoxCache::keys)

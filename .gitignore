@@ -4,3 +4,7 @@ ffcache-*
 *.out
 *.o
 /cache/
+/*.egg-info/
+/dist/
+/build/
+__pycache__/
