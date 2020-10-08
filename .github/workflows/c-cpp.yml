@@ -16,15 +16,16 @@ jobs:
       run: sudo apt-get update &&
            sudo apt-get install -y g++ python3.8-dev make python3-pip
     - name: install pybind11
-      run: python3.8 -m pip install pybind11
+      run: python3 -m pip install pybind11
     - name: make
       run: make CXX=g++-9
+    - name: sdist
+      run: python3 setup.py sdist
     - uses: actions/upload-artifact@v2
       with:
         name: ffcache
         path: |
-          ffcache-*
-          *.so
+          dist/*
 
   test:
     runs-on: ubuntu-18.04
@@ -38,5 +39,7 @@ jobs:
     - name: install dependencies
       run: sudo apt-get update &&
            sudo apt-get install -y g++ python3.8
+    - name: install
+      run: pip3 install dist/*
     - name: test
-      run: python3.8 -c 'import ffcache'
+      run: python3 -c 'import ffcache'
