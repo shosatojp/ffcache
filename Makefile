@@ -2,9 +2,8 @@ SHELL=/bin/bash
 
 PYTHON:=python3.8
 PYTARGET:=_ffcache$(shell ${PYTHON}-config --extension-suffix)
-ARCH:=x86-64
-TARGET:=ffcache-linux-$(ARCH)
-CCOPT:=-std=c++2a -march=$(ARCH) -O2 -g -W -Wall $(shell ${PYTHON} -m pybind11 --includes)
+TARGET:=ffcache
+CCOPT:=-std=c++2a -O2 -g -W -Wall $(shell ${PYTHON} -m pybind11 --includes)
 CXX:=g++
 
 all: $(TARGET) $(PYTARGET)

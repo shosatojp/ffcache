@@ -9,13 +9,13 @@ Firefox cache extractor.
 ### Get list of cache
 
 ```sh
-ffcache --cache ~/.cache/mozilla/firefox/hoge.default/cache2 --list
+FFCACHE_DIR=~/.cache/mozilla/firefox/hoge.default/cache2 ffcache --list
 ```
 
 ### Save cached file
 
 ```sh
-ffcache --cache ~/.cache/mozilla/firefox/hoge.default/cache2 --key https://example.com/image.png --out myimage.png
+FFCACHE_DIR=~/.cache/mozilla/firefox/hoge.default/cache2 ffcache --key https://example.com/image.png --out myimage.png
 ```
 
 ### Options
