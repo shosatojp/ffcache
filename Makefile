@@ -17,7 +17,8 @@ $(PYTARGET): util.o structs.o ffcacheentry.o ffcacheindex.o httpheader.o ffcache
 	$(CXX) $(CCOPT) -fPIC -shared $^ -o $@
 
 $(TARGET): util.o structs.o ffcacheentry.o ffcacheindex.o httpheader.o ffcache.o main.o
-	$(CXX) -static $(CCOPT) $^ -o $@
+	mkdir -p bin
+	$(CXX) -static $(CCOPT) $^ -o bin/$@
 
 clean:
 	rm -f *.o $(TARGET) *.so

@@ -8,3 +8,4 @@ ffcache-*
 /dist/
 /build/
 __pycache__/
+/bin/

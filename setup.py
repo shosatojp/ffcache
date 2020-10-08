@@ -23,7 +23,7 @@ with open('README.md', 'rt', encoding='utf-8') as fh:
 
 setup(
     name='ffcache',
-    version='0.0.10',
+    version='0.0.11',
     author='shosatojp',
     author_email='me@shosato.jp',
     description='Firefox cache extractor',
