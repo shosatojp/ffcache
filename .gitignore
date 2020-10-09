@@ -3,6 +3,7 @@ ffcache-*
 *.so
 *.out
 *.o
+*.d
 /cache/
 /*.egg-info/
 /dist/
