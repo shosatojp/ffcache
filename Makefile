@@ -2,6 +2,8 @@ SHELL=/bin/bash
 
 BUILDDIR:=build
 BINDIR:=bin
+SRCDIR:=src
+
 PYTHON?=python3
 PYTARGET:=$(BINDIR)/_ffcache$(shell ${PYTHON}-config --extension-suffix)
 TARGET:=$(BINDIR)/ffcache
@@ -25,7 +27,7 @@ all: $(TARGET) $(PYTARGET)
 py: $(PYTARGET)
 cli: $(TARGET)
 
-$(BUILDDIR)/%.o: %.cpp
+$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
 	-@mkdir -p build
 	$(CXX) -fPIC $(CCOPT) -MMD -MP -c -o $@ $<
 
