@@ -43,4 +43,4 @@ jobs:
     - name: install
       run: pip3 install *.tar.gz
     - name: test
-      run: python3 -c 'import ffcache'
+      run: cd ../ && python3 -c 'import ffcache'
