@@ -25,3 +25,8 @@ jobs:
       run: python3 -m pip install *.tar.gz
     - name: test
       run: cd ../ && python3 -c 'import ffcache'
+    - uses: actions/upload-artifact@v2
+      with:
+        name: ffcache
+        path: |
+          dist/*
