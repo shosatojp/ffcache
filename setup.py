@@ -16,9 +16,9 @@ class my_ext(build_ext):
             f'-j{os.cpu_count()}',
             f'PYTHON={sys.executable}'
         ]).check_returncode()
-        bins = glob.glob('bin/*.so')
+        bins = glob.glob('*.so')
         for bin in bins:
-            outpath = os.path.join(self.build_lib, os.path.basename(bin))
+            outpath = os.path.join(self.build_lib, bin)
             shutil.move(bin, outpath)
 
 
