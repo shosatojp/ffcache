@@ -38,7 +38,8 @@ jobs:
         name: ffcache
     - name: install dependencies
       run: sudo apt-get update &&
-           sudo apt-get install -y g++ python3.8
+           sudo apt-get install -y g++ python3.8 &&
+           pip3 install setuptools
     - name: install
       run: pip3 install *.tar.gz
     - name: test
