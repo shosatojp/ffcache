@@ -1,13 +1,18 @@
 SHELL=/bin/bash
 
+BUILDDIR:=build
+BINDIR:=bin
 PYTHON?=python3
-PYTARGET:=_ffcache$(shell ${PYTHON}-config --extension-suffix)
-TARGET:=ffcache
+PYTARGET:=$(BINDIR)/_ffcache$(shell ${PYTHON}-config --extension-suffix)
+TARGET:=$(BINDIR)/ffcache
 CCOPT+=-std=c++17 -O2 -g -W -Wall -Wno-unused-value -Wno-range-loop-analysis -Wno-deprecated-declarations $(shell $(PYTHON) -m pybind11 --includes)
 CXX?=g++
 
-PYOBJS:=util.o structs.o ffcacheentry.o ffcacheindex.o httpheader.o ffcache.o pymain.o
-OBJS:=util.o structs.o ffcacheentry.o ffcacheindex.o httpheader.o ffcache.o main.o
+_PYOBJS:=util.o structs.o ffcacheentry.o ffcacheindex.o httpheader.o ffcache.o pymain.o
+_OBJS:=util.o structs.o ffcacheentry.o ffcacheindex.o httpheader.o ffcache.o main.o
+
+PYOBJS:=$(addprefix $(BUILDDIR)/,$(_PYOBJS))
+OBJS:=$(addprefix $(BUILDDIR)/,$(_OBJS))
 
 PYDEPS:=$(PYOBJS:%.o=%.d)
 DEPS:=$(OBJS:%.o=%.d)
@@ -20,18 +25,20 @@ all: $(TARGET) $(PYTARGET)
 py: $(PYTARGET)
 cli: $(TARGET)
 
-%.o: %.cpp
+$(BUILDDIR)/%.o: %.cpp
+	-@mkdir -p build
 	$(CXX) -fPIC $(CCOPT) -MMD -MP -c -o $@ $<
 
 $(PYTARGET): $(PYOBJS)
+	-@mkdir -p bin
 	$(CXX) $(CCOPT) -fPIC -shared $^ $(LIB) -o $@
 
 $(TARGET): $(OBJS)
-	@mkdir -p bin
-	$(CXX) $(CCOPT) $^ -o bin/$@
+	-@mkdir -p bin
+	$(CXX) $(CCOPT) $^ -o $@
 
 clean:
-	rm -rfv *.o bin *.so *.d
+	rm -rfv $(BINDIR) $(BUILDDIR)
 
 test:
 	$(PYTHON) -c 'import ffcache'
