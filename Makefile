@@ -5,7 +5,7 @@ BINDIR:=bin
 SRCDIR:=src
 
 PYTHON?=python3
-PYTARGET:=$(BINDIR)/_ffcache$(shell ${PYTHON}-config --extension-suffix)
+PYTARGET:=_ffcache$(shell ${PYTHON}-config --extension-suffix)
 TARGET:=$(BINDIR)/ffcache
 CCOPT+=-std=c++17 -O2 -g -W -Wall -Wno-unused-value -Wno-range-loop-analysis -Wno-deprecated-declarations $(shell $(PYTHON) -m pybind11 --includes)
 CXX?=g++
@@ -32,7 +32,6 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
 	$(CXX) -fPIC $(CCOPT) -MMD -MP -c -o $@ $<
 
 $(PYTARGET): $(PYOBJS)
-	-@mkdir -p bin
 	$(CXX) $(CCOPT) -fPIC -shared $^ $(LIB) -o $@
 
 $(TARGET): $(OBJS)
@@ -40,7 +39,7 @@ $(TARGET): $(OBJS)
 	$(CXX) $(CCOPT) $^ -o $@
 
 clean:
-	rm -rfv $(BINDIR) $(BUILDDIR)
+	rm -rfv $(TARGET) $(BINDIR) $(BUILDDIR)
 
 test:
 	$(PYTHON) -c 'import ffcache'
