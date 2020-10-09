@@ -1,1 +1,1 @@
-include *.cpp *.hpp Makefile
+include src/* Makefile

@@ -18,7 +18,7 @@ class my_ext(build_ext):
         ]).check_returncode()
         bins = glob.glob('bin/*.so')
         for bin in bins:
-            outpath = os.path.join(self.build_lib, bin)
+            outpath = os.path.join(self.build_lib, os.path.basename(bin))
             shutil.move(bin, outpath)
 
 
