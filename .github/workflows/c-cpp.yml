@@ -15,14 +15,14 @@ jobs:
     - name: install dependencies
       run: sudo apt-get update &&
            sudo apt-get install -y python3.8-dev
-    - name: install with pip
+    - name: pip
       run: python3 -m pip install pybind11 setuptools wheel
     - name: make
       run: make -j8
     - name: sdist
       run: python3 setup.py sdist
     - name: install
-      run: python3 -m pip install bin/*.tar.gz
+      run: python3 -m pip install dist/*.tar.gz
     - name: test
       run: cd ../ && python3 -c 'import ffcache'
     - uses: actions/upload-artifact@v2
