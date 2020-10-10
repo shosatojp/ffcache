@@ -13,3 +13,4 @@ __pycache__/
 CMakeFiles/
 *.cmake
 CMakeCache.txt
+/subprojects/
