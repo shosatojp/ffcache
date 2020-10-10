@@ -10,3 +10,6 @@ ffcache-*
 /build/
 __pycache__/
 /bin/
+CMakeFiles/
+*.cmake
+CMakeCache.txt
