@@ -29,7 +29,7 @@ void endswap(T* objp) {
 
 class HttpHeader {
    public:
-    HttpHeader(std::string src);
+    HttpHeader(const std::string& src);
     int status_code;
     std::string status_source;
     std::string status_message;
@@ -41,7 +41,7 @@ struct CacheIndexHeader {
     uint32_t mVersion;
     uint32_t mTimeStamp;
     uint32_t mIsDirty;
-    static void read(std::ifstream* ifs, CacheIndexHeader* header);
+    static void read(std::ifstream& ifs, CacheIndexHeader& header);
 };
 
 #pragma pack(push, 4)
@@ -53,8 +53,8 @@ struct CacheIndexRecord {
     uint16_t mOnStartTime;
     uint16_t mOnStopTime;
     uint32_t mFlags;
-    std::string hash_tostring();
-    static void read(std::ifstream* ifs, CacheIndexRecord* record);
+    std::string hash_tostring() const;
+    static void read(std::ifstream& ifs, CacheIndexRecord& record);
 };
 
 #pragma pack(pop)
@@ -67,16 +67,16 @@ struct FirefoxMetaData {
     uint32_t mExpirationTime;
     uint32_t mKeySize;
     uint32_t mFlags;
-    static void read(std::ifstream* ifs, FirefoxMetaData* fmd);
+    static void read(std::ifstream& ifs, FirefoxMetaData& fmd);
 };
 
 class FirefoxCacheEntry {
    public:
-    FirefoxCacheEntry(std::string path);
-    std::map<std::string, std::string> load_map();
+    FirefoxCacheEntry(const std::string& path);
+    std::map<std::string, std::string> load_map() const;
     std::unique_ptr<std::vector<char>> get_data() const;
-    bool save(std::string __path) const;
-    HttpHeader get_header();
+    bool save(const std::string& __path) const;
+    HttpHeader get_header() const;
 
     std::string file_path;
     int meta_start;
@@ -88,8 +88,8 @@ class FirefoxCacheEntry {
 
 class FirefoxCacheIndex {
    public:
-    FirefoxCacheIndex(){};
-    FirefoxCacheIndex(std::string path);
+    FirefoxCacheIndex() = default;
+    FirefoxCacheIndex(const std::string& path);
     CacheIndexHeader header;
     std::vector<CacheIndexRecord> records;
 };
@@ -99,9 +99,9 @@ class FirefoxCache {
     FirefoxCache(std::string cache2_dir, bool use_index = false)
         : FirefoxCache(fs::path(cache2_dir), use_index) {}
     FirefoxCache(fs::path cache2_dir, bool use_index = false);
-    FirefoxCacheEntry find(std::string key);
+    FirefoxCacheEntry find(std::string key) const;
     FirefoxCacheIndex index;
-    std::vector<std::string> keys();
-    void find_save(std::string key, std::string path);
+    std::vector<std::string> keys() const;
+    void find_save(std::string key, std::string path) const;
     std::vector<FirefoxCacheEntry> records;
 };

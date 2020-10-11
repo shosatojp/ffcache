@@ -5,7 +5,7 @@
 #include "ffcache.hpp"
 #include "util.hpp"
 
-FirefoxCacheEntry::FirefoxCacheEntry(std::string path) {
+FirefoxCacheEntry::FirefoxCacheEntry(const std::string& path) {
     this->file_path = path;
     std::ifstream ifs(path, std::ios::binary);
     //meta start
@@ -17,20 +17,19 @@ FirefoxCacheEntry::FirefoxCacheEntry(std::string path) {
     //meta data
     int numHashChunks = (int)std::ceil((double)meta_start / CHUNK_SIZE);
     ifs.seekg(meta_start + 4 + numHashChunks * 2, std::ios::beg);
-    FirefoxMetaData::read(&ifs, &metadata);
+    FirefoxMetaData::read(ifs, metadata);
 
     //key
-    char* key = new char[metadata.mKeySize + 1];
-    ifs.read(key, metadata.mKeySize + 1);
-    std::string keysrc(key, metadata.mKeySize);
-    this->key = keysrc.substr(keysrc.find(':') + 1);
-    delete[] key;
+    std::string key;
+    key.resize((size_t)metadata.mKeySize + 1);
+    ifs.read(&key[0], metadata.mKeySize + 1);
+    this->key = key.substr(key.find(':') + 1);
     ifs.seekg(1, std::ios::cur);
     this->map_start = ifs.tellg();
     ifs.close();
 }
 
-std::map<std::string, std::string> FirefoxCacheEntry::load_map() {
+std::map<std::string, std::string> FirefoxCacheEntry::load_map() const {
     std::map<std::string, std::string> result;
     std::ifstream ifs(this->file_path, std::ios::binary);
     ifs.seekg(map_start, std::ios::beg);
@@ -63,7 +62,7 @@ std::unique_ptr<std::vector<char>> FirefoxCacheEntry::get_data() const {
     return ptr;
 }
 
-bool FirefoxCacheEntry::save(std::string __path) const {
+bool FirefoxCacheEntry::save(const std::string& __path) const {
     auto ptr = this->get_data();
 
     if (ptr->size() > 0) {
@@ -76,6 +75,6 @@ bool FirefoxCacheEntry::save(std::string __path) const {
     }
 }
 
-HttpHeader FirefoxCacheEntry::get_header() {
+HttpHeader FirefoxCacheEntry::get_header() const {
     return HttpHeader(this->load_map()["response-head"]);
 }

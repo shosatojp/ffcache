@@ -10,32 +10,32 @@ FirefoxCache::FirefoxCache(fs::path cache2_dir, bool use_index) {
     fs::path cache_entry_dir = cache2_dir / "entries";
     if (use_index) {
         FirefoxCacheIndex index(index_file_path.string());
-        for (int i = 0, length = index.records.size() - 1; i < length; i++) {
-            FirefoxCacheEntry ff((cache_entry_dir / index.records[i].hash_tostring()).string());
-            records.push_back(ff);
+        for (auto& record : index.records) {
+            fs::path path = cache_entry_dir / record.hash_tostring();
+            records.push_back(FirefoxCacheEntry(path));
         }
     } else {
         for (const auto& entry : fs::directory_iterator(cache_entry_dir)) {
-            records.push_back(FirefoxCacheEntry(entry.path().string()));
+            records.push_back(FirefoxCacheEntry(entry.path()));
         }
     }
 }
 
-FirefoxCacheEntry FirefoxCache::find(std::string key) {
-    for (FirefoxCacheEntry e : records) {
+FirefoxCacheEntry FirefoxCache::find(std::string key) const {
+    for (const FirefoxCacheEntry& e : records) {
         if (e.key == key) return e;
     }
     throw std::exception();
 }
 
-void FirefoxCache::find_save(std::string key, std::string path) {
-    FirefoxCacheEntry ff = this->find(key);
+void FirefoxCache::find_save(std::string key, std::string path) const {
+    const FirefoxCacheEntry& ff = this->find(key);
     ff.save(path);
 }
 
-std::vector<std::string> FirefoxCache::keys() {
+std::vector<std::string> FirefoxCache::keys() const {
     std::vector<std::string> keys;
-    for (FirefoxCacheEntry ff : this->records) {
+    for (const FirefoxCacheEntry& ff : this->records) {
         keys.push_back(ff.key);
     }
     return keys;

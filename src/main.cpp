@@ -46,7 +46,7 @@ int main(int argc, const char* argv[]) {
 
     if (list) {
         FirefoxCache index{cache_dir};
-        for (auto key : index.keys()) {
+        for (const auto& key : index.keys()) {
             std::cout << key << std::endl;
         }
         exit(0);

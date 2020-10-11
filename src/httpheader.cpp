@@ -5,7 +5,7 @@
 #include "util.hpp"
 
 //HttpHeader
-HttpHeader::HttpHeader(std::string src) {
+HttpHeader::HttpHeader(const std::string& src) {
     std::vector<std::string> result;
     util::split(result, src, '\n');
     //status
@@ -19,7 +19,7 @@ HttpHeader::HttpHeader(std::string src) {
     }
     result.erase(result.begin());
     //headers
-    for (std::string s : result) {
+    for (const std::string& s : result) {
         std::vector<std::string> header;
         util::split(header, s, ':');
         if (header.size() == 2) {
