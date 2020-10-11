@@ -79,9 +79,9 @@ class FirefoxCacheEntry {
     HttpHeader get_header() const;
 
     std::string file_path;
-    int meta_start;
-    int meta_end;
-    int map_start;
+    unsigned int meta_start;
+    unsigned int meta_end;
+    unsigned int map_start;
     FirefoxMetaData metadata;
     std::string key;
 };

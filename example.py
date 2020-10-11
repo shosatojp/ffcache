@@ -1,4 +1,4 @@
-from ffcache import FirefoxCache
+from ffcache import FirefoxCache, FirefoxCacheEntry
 from ffcache.helper import save
 import urllib.parse
 import os
@@ -13,8 +13,9 @@ out_dir = 'cache'
 if not os.path.exists(out_dir):
     os.mkdir(out_dir)
 
-cache = FirefoxCache(cache_dir)
+cache: FirefoxCache = FirefoxCache(cache_dir)
 
+entry: FirefoxCacheEntry
 for entry in cache.records:
     url = entry.key
     print(url)
@@ -22,4 +23,7 @@ for entry in cache.records:
     filename = urllib.parse.quote(url, safe='')[:255]
     out_path = os.path.join(out_dir, filename)
 
-    save(entry, out_path)
+    try:
+        save(entry, out_path)
+    except:
+        pass

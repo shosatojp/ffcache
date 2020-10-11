@@ -1,7 +1,6 @@
-#include "ffcache.hpp"
-
 #include <cmath>
 
+#include "ffcache.hpp"
 #include "util.hpp"
 
 //FirefoxCacheIndex
@@ -11,6 +10,6 @@ FirefoxCacheIndex::FirefoxCacheIndex(const std::string& path) {
     while (!ifs.eof()) {
         CacheIndexRecord cir;
         CacheIndexRecord::read(ifs, cir);
-        records.push_back(std::move(cir));
+        this->records.push_back(std::move(cir));
     }
 }

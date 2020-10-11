@@ -14,16 +14,24 @@ FirefoxCacheEntry::FirefoxCacheEntry(const std::string& path) {
     ifs.read((char*)&meta_start, 4);
     endswap(&meta_start);
 
+    if (this->meta_start > this->meta_end) {
+        throw runtime_error("Invalid data structure");
+    }
+
     //meta data
     int numHashChunks = (int)std::ceil((double)meta_start / CHUNK_SIZE);
     ifs.seekg(meta_start + 4 + numHashChunks * 2, std::ios::beg);
     FirefoxMetaData::read(ifs, metadata);
 
     //key
-    std::string key;
-    key.resize((size_t)metadata.mKeySize + 1);
-    ifs.read(&key[0], metadata.mKeySize + 1);
-    this->key = key.substr(key.find(':') + 1);
+    if (metadata.mKeySize > 0) {
+        std::string key;
+        key.resize(metadata.mKeySize);
+        ifs.read(&key[0], metadata.mKeySize);
+        this->key = key.substr(key.find(':') + 1);
+    } else {
+        this->key = "";
+    }
     ifs.seekg(1, std::ios::cur);
     this->map_start = ifs.tellg();
     ifs.close();
