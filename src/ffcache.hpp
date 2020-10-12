@@ -1,6 +1,4 @@
 #pragma once
-#include <stdio.h>
-
 #include <algorithm>
 #include <chrono>
 #include <fstream>
@@ -72,36 +70,36 @@ struct FirefoxMetaData {
 
 class FirefoxCacheEntry {
    public:
-    FirefoxCacheEntry(const std::string& path);
+    FirefoxCacheEntry(const fs::path& path);
     std::map<std::string, std::string> load_map() const;
     std::unique_ptr<std::vector<char>> get_data() const;
     bool save(const std::string& __path) const;
     HttpHeader get_header() const;
 
+    std::string key;
+
+   private:
     std::string file_path;
     unsigned int meta_start;
     unsigned int meta_end;
     unsigned int map_start;
     FirefoxMetaData metadata;
-    std::string key;
 };
 
 class FirefoxCacheIndex {
    public:
     FirefoxCacheIndex() = default;
-    FirefoxCacheIndex(const std::string& path);
+    FirefoxCacheIndex(const fs::path& path);
     CacheIndexHeader header;
     std::vector<CacheIndexRecord> records;
 };
 
 class FirefoxCache {
    public:
-    FirefoxCache(std::string cache2_dir, bool use_index = false)
-        : FirefoxCache(fs::path(cache2_dir), use_index) {}
-    FirefoxCache(fs::path cache2_dir, bool use_index = false);
-    FirefoxCacheEntry find(std::string key) const;
+    FirefoxCache(const fs::path& cache2_dir, bool use_index = false);
+    FirefoxCacheEntry find(const std::string& key) const;
     FirefoxCacheIndex index;
     std::vector<std::string> keys() const;
-    void find_save(std::string key, std::string path) const;
+    void find_save(const std::string& key,const std::string& path) const;
     std::vector<FirefoxCacheEntry> records;
 };

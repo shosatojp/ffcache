@@ -19,7 +19,7 @@ PYBIND11_MODULE(_ffcache, m) {
         .def(
             "get_data",
             [](const FirefoxCacheEntry& self) {
-                auto v = self.get_data();
+                const auto v = self.get_data();
                 if (v->size() > 0) {
                     return py::bytes(&v->at(0), v->size());
                 } else {

@@ -5,7 +5,7 @@
 #include "ffcache.hpp"
 #include "util.hpp"
 
-FirefoxCacheEntry::FirefoxCacheEntry(const std::string& path) {
+FirefoxCacheEntry::FirefoxCacheEntry(const fs::path& path) {
     this->file_path = path;
     std::ifstream ifs(path, std::ios::binary);
     //meta start
@@ -71,7 +71,7 @@ std::unique_ptr<std::vector<char>> FirefoxCacheEntry::get_data() const {
 }
 
 bool FirefoxCacheEntry::save(const std::string& __path) const {
-    auto ptr = this->get_data();
+    const auto ptr = this->get_data();
 
     if (ptr->size() > 0) {
         std::ofstream ofs{__path, std::ios::binary};
