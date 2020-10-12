@@ -13,7 +13,11 @@ FirefoxCache::FirefoxCache(fs::path cache2_dir, bool use_index) {
         for (auto& record : index.records) {
             fs::path path = cache_entry_dir / record.hash_tostring();
             if (fs::exists(path)) {
-                records.push_back(FirefoxCacheEntry(path));
+                try {
+                    records.push_back(FirefoxCacheEntry(path));
+                } catch (const std::exception& e) {
+                    std::cerr << e.what() << '\n';
+                }
             }
         }
     } else {

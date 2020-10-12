@@ -19,7 +19,7 @@ FirefoxCacheEntry::FirefoxCacheEntry(const std::string& path) {
     }
 
     //meta data
-    int numHashChunks = (int)std::ceil((double)meta_start / CHUNK_SIZE);
+    int numHashChunks = std::ceil((double)meta_start / CHUNK_SIZE);
     ifs.seekg(meta_start + 4 + numHashChunks * 2, std::ios::beg);
     FirefoxMetaData::read(ifs, metadata);
 
@@ -32,8 +32,8 @@ FirefoxCacheEntry::FirefoxCacheEntry(const std::string& path) {
     } else {
         this->key = "";
     }
-    ifs.seekg(1, std::ios::cur);
-    this->map_start = ifs.tellg();
+    // ifs.seekg(1, std::ios::cur);
+    this->map_start = this->meta_start + metadata.mKeySize + 1;  //ifs.tellg();
     ifs.close();
 }
 
@@ -61,12 +61,12 @@ std::map<std::string, std::string> FirefoxCacheEntry::load_map() const {
 }
 
 std::unique_ptr<std::vector<char>> FirefoxCacheEntry::get_data() const {
-    std::ifstream ifs(this->file_path, std::ios::binary);
-    auto ptr = std::unique_ptr<std::vector<char>>(new std::vector<char>(this->meta_start));
+    auto ptr = std::make_unique<std::vector<char>>(this->meta_start);
     if (this->meta_start > 0) {
+        std::ifstream ifs(this->file_path, std::ios::binary);
         ifs.read(&ptr->at(0), this->meta_start);
+        ifs.close();
     }
-    ifs.close();
     return ptr;
 }
 
