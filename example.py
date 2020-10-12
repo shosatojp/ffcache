@@ -5,10 +5,10 @@ import os
 import brotli
 import gzip
 import zlib
+import sys
 
-# replace with your directory
-cache_dir = os.path.expanduser('~/.cache/mozilla/firefox/jw2y7wcy.dev-edition-default/cache2/')
-out_dir = 'cache'
+cache_dir = os.environ['FFCACHE_DIR']
+out_dir = 'tmp'
 
 if not os.path.exists(out_dir):
     os.mkdir(out_dir)
