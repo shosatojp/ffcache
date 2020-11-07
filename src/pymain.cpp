@@ -15,6 +15,7 @@ PYBIND11_MODULE(_ffcache, m) {
 
     py::class_<FirefoxCacheEntry>(m, "FirefoxCacheEntry")
         .def_readonly("key", &FirefoxCacheEntry::key, py::return_value_policy::reference)
+        .def_readonly("file_path", &FirefoxCacheEntry::file_path, py::return_value_policy::reference)
         .def("get_header", &FirefoxCacheEntry::get_header, py::return_value_policy::reference)
         .def(
             "get_data",
